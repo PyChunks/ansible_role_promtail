@@ -1,0 +1,13 @@
+[Unit]
+Description=Promtail service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart={{ promtail_binary_path }}/{{ promtail_binary_name }} -config.file {{ promtail_config_path }}/{{ promtail_config_name }}
+
+[Install]
+WantedBy=multi-user.target

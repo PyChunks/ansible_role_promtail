@@ -1,0 +1,66 @@
+---
+# tasks file for promtail
+# - name: Install Promtail binary.
+#   ansible.builtin.get_url:
+#     url: "https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip"
+#     dest: /tmp/promtail-linux-amd64.zip
+
+- name: Ensure unzip is installed
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name:  Unzip remote archive containing binary into temp.
+  ansible.builtin.unarchive:
+    src: "https://github.com/grafana/loki/releases/{{ promtail_version }}/download/promtail-linux-amd64.zip"
+    dest: /tmp/
+    remote_src: true
+
+- name: Copy binary to global PATH folder and give it a readable name
+  ansible.builtin.copy:
+    src: /tmp/promtail-linux-amd64
+    dest: "{{ promtail_binary_path }}/{{ promtail_binary_name }}"
+    remote_src: true
+
+- name: Make binary executable.
+  ansible.builtin.file:
+    path: "{{ promtail_binary_path }}/{{ promtail_binary_name }}"
+    mode: a+x
+
+- name: Create promtail's config directory.
+  ansible.builtin.file:
+    path: "{{ promtail_config_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create promtail's config directory.
+  ansible.builtin.file:
+    path: "{{ promtail_config_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy promtail's default config.
+  ansible.builtin.template:
+    src: config.yml.j2
+    dest: "{{ promtail_config_path }}/{{ promtail_config_name }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Make promtail a service.
+  ansible.builtin.template:
+    src: promtail.service.j2
+    dest: /usr/lib/systemd/system/promtail.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure promtail.service is started and enabled at boot.
+  ansible.builtin.service:
+    name: promtail
+    state: started
+    enabled: true
