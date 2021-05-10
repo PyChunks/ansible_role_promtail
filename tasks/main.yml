@@ -1,10 +1,4 @@
 ---
-# tasks file for promtail
-# - name: Install Promtail binary.
-#   ansible.builtin.get_url:
-#     url: "https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip"
-#     dest: /tmp/promtail-linux-amd64.zip
-
 - name: Ensure unzip is installed
   ansible.builtin.package:
     name: unzip

@@ -1,6 +1,5 @@
 ---
 # defaults file for promtail
-
 promtail_version: latest
 
 promtail_binary_path: /usr/bin
@@ -11,6 +10,6 @@ promtail_config_path: /etc/promtail
 
 promtail_config_name: config.yml
 
-client_ip_or_hostname: 127.0.0.1
+client_ip_or_domain: 127.0.0.1
 
 client_port: 3100

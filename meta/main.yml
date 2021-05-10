@@ -1,6 +1,6 @@
 galaxy_info:
   author: Vincent D-Gauthier
-  description: install and configure promtail
+  description: installs and configures promtail
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -13,7 +13,7 @@ galaxy_info:
   # - GPL-3.0-only
   # - Apache-2.0
   # - CC-BY-4.0
-  license: GPL-2.0-or-later
+  license: BSD-3_Clause
 
   min_ansible_version: 2.1
 
