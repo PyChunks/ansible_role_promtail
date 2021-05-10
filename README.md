@@ -1,22 +1,40 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Installs and configures Promtail
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Git is the only requirement since we install promtail directly from the official repository.
 
 Role Variables
 --------------
+Variables with a default value:
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```jinja2
+promtail_version: latest
+
+promtail_binary_path: /usr/bin
+
+promtail_binary_name: promtail
+
+promtail_config_path: /etc/promtail
+
+promtail_config_name: config.yml
+
+client_ip_or_domain: 127.0.0.1
+
+client_port: 3100
+```
+
+You will want to change `client_ip_or_domain` if your receiving server is remote.
+
+Otherwise the default values shouldn't be changed unless you need a very specific behaviour.
 
 Dependencies
 ------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
@@ -24,8 +42,10 @@ Example Playbook
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
+      vars: 
+        client_ip_or_domain: loki_domain_here
       roles:
-         - { role: username.rolename, x: 42 }
+         - ansible_role_promtail 
 
 License
 -------
@@ -34,5 +54,4 @@ BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Created by Vincent D-Gauthier
